@@ -16,7 +16,7 @@ DEBUG_EXECUTABLE_FILE := fml_debug
 PARSER_TESTS_EXECUTABLE_FILE := fml_parser_tests
 INSTRUCTIONS_TESTS_EXECUTABLE_FILE := fml_instructions_tests
 COMPILER_TESTS_EXECUTABLE_FILE := fml_compiler_tests
-VM_STACK_TESTS_EXECUTABLE_FILE := vm_stack_tests
+VM_STACK_TESTS_EXECUTABLE_FILE := fml_vm_stack_tests
 
 CC := gcc
 CFLAGS := -Wall -Wextra
