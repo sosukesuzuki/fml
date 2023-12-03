@@ -1,16 +1,7 @@
+#include "fml_vm.h"
 #include "fml_instructions.h"
 #include "fml_vm_stack.h"
 #include <stdlib.h>
-
-typedef struct VMContext {
-    char* str;
-    char** sp;
-
-    Instructions* instructions;
-    Instruction* pc;
-
-    VMStack* stack;
-} VMContext;
 
 int initVM(VMContext* context, char* str, Instructions* instrcution, VMStack* vmStack)
 {
