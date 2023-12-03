@@ -101,7 +101,8 @@ int parseConcat(char** s, Node* node, Token* token)
             return 0;
         } else if (token->kind == TK_LEFT_PARENTHESES) {
             Node* right = malloc(sizeof(Node));
-            Node* left = node;
+            Node* left = malloc(sizeof(Node));
+            memcpy(left, node, sizeof(Node));
 
             node->kind = NODE_CONCAT;
             node->u.concatNode.left = left;
@@ -146,7 +147,16 @@ int parseFactor(char** s, Node* node, Token* token)
         return parseChar(s, node, token);
     } else if (token->kind == TK_LEFT_PARENTHESES) {
         (*s)++;
-        return parseSubexpr(s, node, token);
+        r = parseSubexpr(s, node, token);
+        if (r < 0)
+            return r;
+        r = fetchToken(token, s);
+        if (r < 0)
+            return r;
+        if (token->kind == TK_RIGHT_PARENTHESES) {
+            (*s)++;
+        }
+        return 0;
     }
     return -1;
 }
