@@ -38,9 +38,9 @@ void parseRegexp_03()
     int r = parseRegexp(&node, s);
 
     TEST_ASSERT(r, 0);
-    TEST_ASSERT(node.kind, NODE_QTFE);
-    TEST_ASSERT(node.u.qtfeNode.child->kind, NODE_CHAR);
-    TEST_ASSERT(node.u.qtfeNode.child->u.charNode.c, 'a');
+    TEST_ASSERT(node.kind, NODE_QTFR);
+    TEST_ASSERT(node.u.qtfrNode.child->kind, NODE_CHAR);
+    TEST_ASSERT(node.u.qtfrNode.child->u.charNode.c, 'a');
 }
 
 void parseRegexp_04()
@@ -67,9 +67,9 @@ void parseRegexp_05()
     TEST_ASSERT(node.kind, NODE_ALT);
     TEST_ASSERT(node.u.altNode.left->kind, NODE_CHAR);
     TEST_ASSERT(node.u.altNode.left->u.charNode.c, 'a');
-    TEST_ASSERT(node.u.altNode.right->kind, NODE_QTFE);
-    TEST_ASSERT(node.u.altNode.right->u.qtfeNode.child->kind, NODE_CHAR);
-    TEST_ASSERT(node.u.altNode.right->u.qtfeNode.child->u.charNode.c, 'b');
+    TEST_ASSERT(node.u.altNode.right->kind, NODE_QTFR);
+    TEST_ASSERT(node.u.altNode.right->u.qtfrNode.child->kind, NODE_CHAR);
+    TEST_ASSERT(node.u.altNode.right->u.qtfrNode.child->u.charNode.c, 'b');
 }
 
 void parseRegexp_06()
@@ -79,12 +79,12 @@ void parseRegexp_06()
     int r = parseRegexp(&node, s);
 
     TEST_ASSERT(r, 0);
-    TEST_ASSERT(node.kind, NODE_QTFE);
-    TEST_ASSERT(node.u.qtfeNode.child->kind, NODE_ALT);
-    TEST_ASSERT(node.u.qtfeNode.child->u.altNode.left->kind, NODE_CHAR);
-    TEST_ASSERT(node.u.qtfeNode.child->u.altNode.left->u.charNode.c, 'a');
-    TEST_ASSERT(node.u.qtfeNode.child->u.altNode.right->kind, NODE_CHAR);
-    TEST_ASSERT(node.u.qtfeNode.child->u.altNode.right->u.charNode.c, 'b');
+    TEST_ASSERT(node.kind, NODE_QTFR);
+    TEST_ASSERT(node.u.qtfrNode.child->kind, NODE_ALT);
+    TEST_ASSERT(node.u.qtfrNode.child->u.altNode.left->kind, NODE_CHAR);
+    TEST_ASSERT(node.u.qtfrNode.child->u.altNode.left->u.charNode.c, 'a');
+    TEST_ASSERT(node.u.qtfrNode.child->u.altNode.right->kind, NODE_CHAR);
+    TEST_ASSERT(node.u.qtfrNode.child->u.altNode.right->u.charNode.c, 'b');
 }
 
 void parseRegexp_07()

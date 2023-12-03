@@ -130,8 +130,8 @@ int parseQtrf(char** s, Node* node, Token* token)
         (*s)++;
         Node* child = malloc(sizeof(Node));
         memcpy(child, node, sizeof(Node));
-        node->kind = NODE_QTFE;
-        node->u.qtfeNode.child = child;
+        node->kind = NODE_QTFR;
+        node->u.qtfrNode.child = child;
         return 0;
     }
     return 0;

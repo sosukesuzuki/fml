@@ -2,6 +2,7 @@
 /fml_debug
 /fml_parser_tests
 /fml_instructions_tests
+/fml_compiler_tests
 
 *.o
 .vscode

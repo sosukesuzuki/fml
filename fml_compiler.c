@@ -1,4 +1,7 @@
 #include "fml_compiler.h"
+#include <stdlib.h>
+
+void compileNode(Node* node, Instructions* instructions);
 
 // a
 void compileChar(Node* node, Instructions* instructions)
@@ -29,8 +32,7 @@ void compileQtfr(Node* node, Instructions* instructions)
     instruction1->u.iSplit.offset1 = instructions->size + 1;
     appendInstruction(instructions, instruction1);
 
-    int l2 = instructions->size;
-    compileNode(node->u.qtfeNode.child, instructions);
+    compileNode(node->u.qtfrNode.child, instructions);
 
     Instruction* instructionJmp = malloc(sizeof(Instruction));
     instructionJmp->kind = INSTRUCTION_JMP;
@@ -77,7 +79,7 @@ void compileNode(Node* node, Instructions* instructions)
     case NODE_ALT:
         compileAlt(node, instructions);
         break;
-    case NODE_QTFE:
+    case NODE_QTFR:
         compileQtfr(node, instructions);
         break;
     }

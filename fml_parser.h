@@ -19,7 +19,7 @@ typedef enum NodeKind {
     NODE_CHAR, // a
     NODE_ALT, // a|b
     NODE_CONCAT, // ab
-    NODE_QTFE, // a*
+    NODE_QTFR, // a*
 } NodeKind;
 
 typedef struct Node Node;
@@ -38,9 +38,9 @@ typedef struct ConcatNode {
     Node* right;
 } ConcatNode;
 
-typedef struct QtfeNode {
+typedef struct QtfrNode {
     Node* child;
-} QtfeNode;
+} QtfrNode;
 
 struct Node {
     NodeKind kind;
@@ -48,7 +48,7 @@ struct Node {
         CharNode charNode;
         AltNode altNode;
         ConcatNode concatNode;
-        QtfeNode qtfeNode;
+        QtfrNode qtfrNode;
     } u;
 };
 
