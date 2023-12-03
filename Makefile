@@ -9,7 +9,7 @@ DEBUG_OBJECT_FILES = $(MAIN_SRC_FILES:.c=_debug.o)
 PARSER_TESTS_OBJECT_FILES = $(PARSER_TESTS_SRC_FILES:.c=.o)
 INSTRUCTIONS_TESTS_OBJECT_FILES = $(INSTRUCTIONS_TESTS_SRC_FILES:.c=.o)
 COMPILER_TESTS_OBJECT_FILES = $(COMPILER_TESTS_SRC_FILES:.c=.o)
-VM_STACK_OBJECT_FILES = $(VM_STACK_TESTS_FILES:.c=.o)
+VM_STACK_TESTS_OBJECT_FILES = $(VM_STACK_TESTS_FILES:.c=.o)
 
 MAIN_EXECUTABLE_FILE := fml
 DEBUG_EXECUTABLE_FILE := fml_debug
@@ -42,7 +42,7 @@ fml_instructions_tests: $(INSTRUCTIONS_TESTS_OBJECT_FILES)
 fml_compiler_tests: $(COMPILER_TESTS_OBJECT_FILES)
 	$(CC) $(CFLAGS) -o $(COMPILER_TESTS_EXECUTABLE_FILE) $^ -lm
 
-fml_vm_stack_tests: $(VM_STACK_OBJECT_FILES)
+fml_vm_stack_tests: $(VM_STACK_TESTS_OBJECT_FILES)
 	$(CC) $(CFLAGS) -o $(VM_STACK_TESTS_EXECUTABLE_FILE) $^ -lm
 
 %.o: %.c
@@ -62,6 +62,8 @@ run-compiler-tests: fml_compiler_tests
 
 run-vm-stack-tests: fml_vm_stack_tests
 	./$(VM_STACK_TESTS_EXECUTABLE_FILE)
+
+run-all-tests: run-parser-tests run-instructions-tests run-compiler-tests run-vm-stack-tests
 
 format:
 	$(CLANG_FORMAT) -i $(FORMAT_FILES)
