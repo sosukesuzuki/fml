@@ -33,12 +33,12 @@ typedef struct Instruction {
 } Instruction;
 
 typedef struct {
-    Instruction* instructions;
+    Instruction** instructions;
     int size;
     int cap;
 } Instructions;
 
-int appendInstruction(Instructions* instructions, Instruction instruction);
+int appendInstruction(Instructions* instructions, Instruction* instruction);
 int initInstructions(Instructions* instructions);
 
 #endif

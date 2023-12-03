@@ -3,7 +3,7 @@
 
 #define INIT_INSTRUCTIONS_CAP 16
 
-int appendInstruction(Instructions* instructions, Instruction instruction)
+int appendInstruction(Instructions* instructions, Instruction* instruction)
 {
     if (instructions->size >= instructions->cap) {
         instructions->cap *= 2;
