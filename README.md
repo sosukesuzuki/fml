@@ -16,6 +16,12 @@ make fml
 make fml_debug
 ```
 
+### Build and run parser tests
+
+```
+make run-parser-tests
+```
+
 ### Format
 
 ```
