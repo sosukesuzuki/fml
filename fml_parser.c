@@ -62,16 +62,18 @@ int parseAlt(char** s, Node* node, Token* token)
             return r;
         if (token->kind == TK_VERTICAL_BAR) {
             (*s)++;
-            Node* right = malloc(sizeof(Node));
             Node* left = malloc(sizeof(Node));
             memcpy(left, node, sizeof(Node));
+
+            Node* right = malloc(sizeof(Node));
+            r = parseConcat(s, right, token);
+            if (r < 0)
+                return r;
 
             node->kind = NODE_ALT;
             node->u.altNode.left = left;
             node->u.altNode.right = right;
-            r = parseConcat(s, right, token);
-            if (r < 0)
-                return r;
+
             return 0;
         } else {
             return 0;
@@ -83,6 +85,8 @@ int parseConcat(char** s, Node* node, Token* token)
 {
     int r;
     r = parseQtrf(s, node, token);
+    if (r < 0)
+        return r;
     for (;;) {
         r = fetchToken(token, s);
         if (r < 0)
