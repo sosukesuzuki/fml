@@ -12,7 +12,7 @@ typedef struct VMStack {
     int cap;
 } VMStack;
 
-void initStack(VMStack* stack);
+void initVMStack(VMStack* stack);
 int pushVMStack(VMStack* stack, Thread* thread);
 Thread* popVMStack(VMStack* stack);
 

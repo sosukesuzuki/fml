@@ -1,8 +1,9 @@
 #include "fml_vm_stack.h"
+#include <stdlib.h>
 
 #define VM_STACK_CAP 32
 
-void initStack(VMStack* stack)
+void initVMStack(VMStack* stack)
 {
     stack->top = -1;
     stack->cap = VM_STACK_CAP;
