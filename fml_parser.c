@@ -39,6 +39,7 @@ int parseRegexp(char *str) {
     if (r < 0) {
       return r;
     }
+    s++;
   }
 
   return -1;
