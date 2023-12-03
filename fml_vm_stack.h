@@ -2,8 +2,8 @@
 #define FML_VM_STACK_H
 
 typedef struct Thread {
-    int pc;
-    int sp;
+    Instruction* pc;
+    char** sp;
 } Thread;
 
 typedef struct VMStack {

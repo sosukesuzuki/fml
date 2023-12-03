@@ -66,7 +66,7 @@ int runVM(VMContext* context)
             if (thread == NULL) {
                 return 0;
             }
-            context->pc = context->instructions->instructions[thread->pc];
+            context->pc = thread->pc;
             context->sp = thread->sp;
         }
     }
