@@ -1,6 +1,8 @@
 #include "fml_instructions.h";
 #include "fml_parser.h";
 
+#define INIT_INSTRUCTIONS_CAP 16
+
 int appendInstruction(Instructions* instructions, Instruction instruction)
 {
     if (instructions->size >= instructions->cap) {
@@ -17,7 +19,7 @@ int appendInstruction(Instructions* instructions, Instruction instruction)
 int initInstructions(Instructions* instructions)
 {
     instructions->size = 0;
-    instructions->cap = 16;
+    instructions->cap = INIT_INSTRUCTIONS_CAP;
     instructions->instructions = malloc(sizeof(Instruction) * instructions->cap);
     return 0;
 }
