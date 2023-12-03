@@ -14,3 +14,6 @@ jobs:
 
       - name: Run instructions tests
         run: make run-instructions-tests
+
+      - name: Run compiler tests
+        run: make run-compiler-tests
