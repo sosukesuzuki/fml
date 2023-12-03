@@ -1,4 +1,6 @@
 /fml
 /fml_debug
+/fml_parser_tests
+
 *.o
 .vscode
