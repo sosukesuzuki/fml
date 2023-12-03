@@ -14,6 +14,43 @@ typedef struct {
   char c;
 } Token;
 
+typedef enum NodeKind {
+  NODE_CHAR,   // a
+  NODE_ALT,    // a|b
+  NODE_CONCAT, // ab
+  NODE_QTFE,   // a*
+} NodeKind;
+
+typedef struct Node Node;
+
+typedef struct CharNode {
+  char c;
+} CharNode;
+
+typedef struct AltNode {
+  Node *left;
+  Node *right;
+} AltNode;
+
+typedef struct ConcatNode {
+  Node *left;
+  Node *right;
+} ConcatNode;
+
+typedef struct QtfeNode {
+  Node *child;
+} QtfeNode;
+
+struct Node {
+  NodeKind kind;
+  union {
+    CharNode charNode;
+    AltNode altNode;
+    ConcatNode concatNode;
+    QtfeNode qtfeNode;
+  };
+};
+
 int parseRegexp();
 
 #endif
