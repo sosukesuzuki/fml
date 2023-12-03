@@ -104,6 +104,40 @@ void parseRegexp_06()
     TEST_ASSERT(node.u.qtfeNode.child->u.altNode.right->u.charNode.c, 'b');
 }
 
+void parseRegexp_07()
+{
+    Node node;
+    char* s = "ab|c";
+    int r = parseRegexp(&node, s);
+
+    TEST_ASSERT(r, 0);
+    TEST_ASSERT(node.kind, NODE_ALT);
+    TEST_ASSERT(node.u.altNode.left->kind, NODE_CONCAT);
+    TEST_ASSERT(node.u.altNode.left->u.concatNode.left->kind, NODE_CHAR);
+    TEST_ASSERT(node.u.altNode.left->u.concatNode.left->u.charNode.c, 'a');
+    TEST_ASSERT(node.u.altNode.left->u.concatNode.right->kind, NODE_CHAR);
+    TEST_ASSERT(node.u.altNode.left->u.concatNode.right->u.charNode.c, 'b');
+    TEST_ASSERT(node.u.altNode.right->kind, NODE_CHAR);
+    TEST_ASSERT(node.u.altNode.right->u.charNode.c, 'c');
+}
+
+void parseRegexp_08()
+{
+    Node node;
+    char* s = "a|bc";
+    int r = parseRegexp(&node, s);
+
+    TEST_ASSERT(r, 0);
+    TEST_ASSERT(node.kind, NODE_ALT);
+    TEST_ASSERT(node.u.altNode.left->kind, NODE_CHAR);
+    TEST_ASSERT(node.u.altNode.left->u.charNode.c, 'a');
+    TEST_ASSERT(node.u.altNode.right->kind, NODE_CONCAT);
+    TEST_ASSERT(node.u.altNode.right->u.concatNode.left->kind, NODE_CHAR);
+    TEST_ASSERT(node.u.altNode.right->u.concatNode.left->u.charNode.c, 'b');
+    TEST_ASSERT(node.u.altNode.right->u.concatNode.right->kind, NODE_CHAR);
+    TEST_ASSERT(node.u.altNode.right->u.concatNode.right->u.charNode.c, 'c');
+}
+
 int main()
 {
     RUN_TEST(parseRegexp_01);
@@ -112,6 +146,8 @@ int main()
     RUN_TEST(parseRegexp_04);
     RUN_TEST(parseRegexp_05);
     RUN_TEST(parseRegexp_06);
+    RUN_TEST(parseRegexp_07);
+    RUN_TEST(parseRegexp_08);
 
     return 0;
 }
