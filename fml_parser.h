@@ -51,6 +51,6 @@ struct Node {
   };
 };
 
-int parseRegexp();
+int parseRegexp(char *str);
 
 #endif
