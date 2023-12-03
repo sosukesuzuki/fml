@@ -3,6 +3,7 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 int fetchToken(Token* token, char** s)
 {
@@ -86,8 +87,11 @@ int parseConcat(char** s, Node* node, Token* token)
             return r;
         if (token->kind == TK_LATIN_LETTER) {
             Node* right = malloc(sizeof(Node));
+            Node* left = malloc(sizeof(Node));
+            memcpy(left, node, sizeof(Node));
+
             node->kind = NODE_CONCAT;
-            node->u.concatNode.left = node;
+            node->u.concatNode.left = left;
             node->u.concatNode.right = right;
             r = parseQtrf(s, right, token);
             if (r < 0)
