@@ -1,26 +1,83 @@
 #include "fml_instructions.h"
 #include "fml_vm_stack.h"
+#include <stdlib.h>
 
 typedef struct VMContext {
-    char *str;
-    char **sp;
+    char* str;
+    char** sp;
 
-    Instructions *instructions;
-    Instruction *pc;
+    Instructions* instructions;
+    Instruction* pc;
 
     VMStack* stack;
 } VMContext;
 
-int initVMContext(VMContext* context, char* str)
+int initVM(VMContext* context, char* str, Instructions* instrcution, VMStack* vmStack)
 {
     context->str = str;
     context->sp = &str;
 
-    context->instructions = malloc(sizeof(Instructions));
-    initInstructions(context->instructions);
+    context->instructions = instrcution;
+    context->pc = instrcution->instructions[0];
 
-    context->stack = malloc(sizeof(VMStack));
-    initVMStack(context->stack);
+    context->stack = vmStack;
 
     return 0;
+}
+
+int runVM(VMContext* context)
+{
+    while (1) {
+        int result = 0;
+        switch (context->pc->kind) {
+        case INSTRUCTION_MATCH:
+            return 1;
+        case INSTRUCTION_CHAR:
+            result = instructionChar(context, context->pc);
+            break;
+        case INSTRUCTION_JMP:
+            result = instructionJmp(context, context->pc);
+            break;
+        case INSTRUCTION_SPLIT:
+            result = instructionSplit(context, context->pc);
+            break;
+        }
+
+        if (!result) {
+            Thread* thread = popVMStack(context->stack);
+            if (thread == NULL) {
+                return 0;
+            }
+            context->pc = context->instructions->instructions[thread->pc];
+            context->sp = thread->sp;
+        }
+    }
+    return 1;
+}
+
+int instructionChar(VMContext* context, Instruction* instruction)
+{
+    if (**context->sp == instruction->u.iChar.c) {
+        (*context->sp)++;
+        context->pc++;
+        return 1;
+    }
+    return 0;
+}
+
+int instructionJmp(VMContext* context, Instruction* instruction)
+{
+    context->pc = context->instructions->instructions[instruction->u.iJmp.offset];
+    return 1;
+}
+
+int instructionSplit(VMContext* context, Instruction* instruction)
+{
+    Thread* thread = malloc(sizeof(Thread));
+    thread->pc = context->pc + instruction->u.iSplit.offset1;
+    thread->sp = context->sp;
+    pushVMStack(context->stack, thread);
+
+    context->pc = context->instructions->instructions[instruction->u.iSplit.offset2];
+    return 1;
 }
