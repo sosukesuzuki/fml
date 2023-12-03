@@ -28,6 +28,10 @@ int fetchToken(Token* token, char** s)
         token->kind = TK_RIGHT_PARENTHESES;
         token->c = '\0';
         return 0;
+    } else if (*p == '\0') {
+        token->kind = TK_END_OF_STRING;
+        token->c = '\0';
+        return 0;
     }
 
     return -1;

@@ -7,6 +7,7 @@ typedef enum TokenKind {
     TK_VERTICAL_BAR, // |
     TK_LEFT_PARENTHESES, // (
     TK_RIGHT_PARENTHESES, // )
+    TK_END_OF_STRING, // \0
 } TokenKind;
 
 typedef struct {
