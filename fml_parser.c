@@ -125,8 +125,10 @@ int parseQtrf(char** s, Node* node, Token* token)
         return r;
     if (token->kind == TK_ASTERISK) {
         (*s)++;
+        Node *child = malloc(sizeof(Node));
+        memcpy(child, node, sizeof(Node));
         node->kind = NODE_QTFE;
-        node->u.qtfeNode.child = node;
+        node->u.qtfeNode.child = child;
         return 0;
     }
     return 0;

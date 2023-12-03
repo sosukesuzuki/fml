@@ -48,10 +48,23 @@ void parseRegexp_02()
     TEST_ASSERT(node.u.concatNode.right->u.charNode.c, 'b');
 }
 
+void parseRegexp_03()
+{
+    Node node;
+    char* s = "a*";
+    int r = parseRegexp(&node, s);
+
+    TEST_ASSERT(r, 0);
+    TEST_ASSERT(node.kind, NODE_QTFE);
+    TEST_ASSERT(node.u.qtfeNode.child->kind, NODE_CHAR);
+    TEST_ASSERT(node.u.qtfeNode.child->u.charNode.c, 'a');
+}
+
 int main()
 {
     RUN_TEST(parseRegexp_01);
     RUN_TEST(parseRegexp_02);
+    RUN_TEST(parseRegexp_03);
 
     return 0;
 }
