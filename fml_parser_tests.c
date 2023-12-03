@@ -74,12 +74,28 @@ void parseRegexp_04()
     TEST_ASSERT(node.u.altNode.right->u.charNode.c, 'b');
 }
 
+void parseRegexp_05()
+{
+    Node node;
+    char* s = "a|b*";
+    int r = parseRegexp(&node, s);
+
+    TEST_ASSERT(r, 0);
+    TEST_ASSERT(node.kind, NODE_ALT);
+    TEST_ASSERT(node.u.altNode.left->kind, NODE_CHAR);
+    TEST_ASSERT(node.u.altNode.left->u.charNode.c, 'a');
+    TEST_ASSERT(node.u.altNode.right->kind, NODE_QTFE);
+    TEST_ASSERT(node.u.altNode.right->u.qtfeNode.child->kind, NODE_CHAR);
+    TEST_ASSERT(node.u.altNode.right->u.qtfeNode.child->u.charNode.c, 'b');
+}
+
 int main()
 {
     RUN_TEST(parseRegexp_01);
     RUN_TEST(parseRegexp_02);
     RUN_TEST(parseRegexp_03);
     RUN_TEST(parseRegexp_04);
+    RUN_TEST(parseRegexp_05);
 
     return 0;
 }
