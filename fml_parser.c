@@ -140,7 +140,7 @@ int parseChar(char **s, Node *node, Token *token) {
   return 0;
 }
 
-int parseRegexp(char *str) {
+int parseRegexp(Node *node, char *str) {
   int r;
   char **s = &str;
   Token token;
@@ -150,7 +150,6 @@ int parseRegexp(char *str) {
     return r;
   }
 
-  Node *node = malloc(sizeof(Node));
   r = parseSubexpr(s, node, &token);
   if (r < 0) {
     return r;

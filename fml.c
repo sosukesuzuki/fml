@@ -7,7 +7,8 @@ int main() {
   char s[BUFFER_SIZE];
   scanf("%s", s);
 
-  parseRegexp(s);
+  Node node;
+  parseRegexp(&node, s);
 
   return 0;
 }
