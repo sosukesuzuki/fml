@@ -29,15 +29,16 @@ int fetchToken(Token *token, char **s) {
   return -1;
 }
 
-int parseRegexp() {
+int parseRegexp(char *str) {
   int r;
-  char *str = "a|b";
   char **s = &str;
   Token token;
 
-  r = fetchToken(&token, s);
-  if (r < 0) {
-    return r;
+  while (**s != '\0') {
+    r = fetchToken(&token, s);
+    if (r < 0) {
+      return r;
+    }
   }
 
   return -1;

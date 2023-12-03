@@ -14,4 +14,6 @@ typedef struct {
   char c;
 } Token;
 
+int parseRegexp();
+
 #endif
