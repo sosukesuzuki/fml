@@ -2,25 +2,41 @@
 
 Fml is a toy regular expression engine written in C.
 
-## Development
+## Build
 
-### Build
+### Production build
 
 ```
 make fml
 ```
 
-### Build for debugging
+### Debugging build
 
 ```
 make fml_debug
 ```
 
-### Build and run parser tests
+## Tests
+
+### Parser tests
 
 ```
 make run-parser-tests
 ```
+
+### Instructions tests
+
+```
+make run-instructions-tests
+```
+
+### Compiler tests
+
+```
+make run-compiler-tests
+```
+
+## Development
 
 ### Format
 
