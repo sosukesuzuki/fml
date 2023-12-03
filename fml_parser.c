@@ -155,5 +155,5 @@ int parseRegexp(Node *node, char *str) {
     return r;
   }
 
-  return -1;
+  return r;
 }

@@ -4,11 +4,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define TEST_ASSERT(expr)                                                      \
+#define TEST_ASSERT(actual, expected)                                          \
   do {                                                                         \
-    if (!(expr)) {                                                             \
-      fprintf(stderr, "Assertion failed: %s (%s:%d)\n", #expr, __FILE__,       \
-              __LINE__);                                                       \
+    if ((actual) != (expected)) {                                              \
+      fprintf(                                                                 \
+          stderr,                                                              \
+          "Assertion failed: (%s: %d)\nExpected: %s (%d)\nActual: %s (%d)\n",  \
+          __FILE__, __LINE__, #expected, expected, #actual, actual);           \
       exit(1);                                                                 \
     }                                                                          \
   } while (0)
@@ -25,9 +27,11 @@ void parseRegexp_01() {
   char *s = "a";
   int r = parseRegexp(&node, s);
 
-  TEST_ASSERT(r == 0);
-  TEST_ASSERT(node.kind == NODE_CHAR);
-  TEST_ASSERT(node.charNode.c == 'a');
+  printf("r: %d\n", r);
+
+  TEST_ASSERT(r, 0);
+  TEST_ASSERT(node.kind, NODE_CHAR);
+  TEST_ASSERT(node.charNode.c, 'a');
 }
 
 int main() {
