@@ -73,8 +73,6 @@ int parseAlt(char** s, Node* node, Token* token)
             node->kind = NODE_ALT;
             node->u.altNode.left = left;
             node->u.altNode.right = right;
-
-            return 0;
         } else {
             return 0;
         }
@@ -102,7 +100,6 @@ int parseConcat(char** s, Node* node, Token* token)
             r = parseQtrf(s, right, token);
             if (r < 0)
                 return r;
-            return 0;
         } else if (token->kind == TK_LEFT_PARENTHESES) {
             Node* right = malloc(sizeof(Node));
             Node* left = malloc(sizeof(Node));
@@ -114,7 +111,6 @@ int parseConcat(char** s, Node* node, Token* token)
             r = parseConcat(s, right, token);
             if (r < 0)
                 return r;
-            return 0;
         } else {
             return 0;
         }
