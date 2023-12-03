@@ -138,6 +138,22 @@ void parseRegexp_08()
     TEST_ASSERT(node.u.altNode.right->u.concatNode.right->u.charNode.c, 'c');
 }
 
+void parseRegexp_09() {
+    Node node;
+    char *s = "abc";
+    int r = parseRegexp(&node, s);
+
+    TEST_ASSERT(r, 0);
+    TEST_ASSERT(node.kind, NODE_CONCAT);
+    TEST_ASSERT(node.u.concatNode.left->kind, NODE_CONCAT);
+    TEST_ASSERT(node.u.concatNode.left->u.concatNode.left->kind, NODE_CHAR);
+    TEST_ASSERT(node.u.concatNode.left->u.concatNode.left->u.charNode.c, 'a');
+    TEST_ASSERT(node.u.concatNode.left->u.concatNode.right->kind, NODE_CHAR);
+    TEST_ASSERT(node.u.concatNode.left->u.concatNode.right->u.charNode.c, 'b');
+    TEST_ASSERT(node.u.concatNode.right->kind, NODE_CHAR);
+    TEST_ASSERT(node.u.concatNode.right->u.charNode.c, 'c');
+}
+
 int main()
 {
     RUN_TEST(parseRegexp_01);
@@ -148,6 +164,7 @@ int main()
     RUN_TEST(parseRegexp_06);
     RUN_TEST(parseRegexp_07);
     RUN_TEST(parseRegexp_08);
+    RUN_TEST(parseRegexp_09);
 
     return 0;
 }
