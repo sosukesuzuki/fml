@@ -48,7 +48,7 @@ struct Node {
     AltNode altNode;
     ConcatNode concatNode;
     QtfeNode qtfeNode;
-  };
+  } u;
 };
 
 int parseRegexp(Node *node, char *str);

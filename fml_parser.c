@@ -54,8 +54,8 @@ int parseAlt(char **s, Node *node, Token *token) {
       (*s)++;
       Node *right = malloc(sizeof(Node));
       node->kind = NODE_ALT;
-      node->altNode.left = node;
-      node->altNode.right = right;
+      node->u.altNode.left = node;
+      node->u.altNode.right = right;
       r = parseConcat(s, right, token);
       if (r < 0)
         return r;
@@ -76,8 +76,8 @@ int parseConcat(char **s, Node *node, Token *token) {
     if (token->kind == TK_LATIN_LETTER) {
       Node *right = malloc(sizeof(Node));
       node->kind = NODE_CONCAT;
-      node->concatNode.left = node;
-      node->concatNode.right = right;
+      node->u.concatNode.left = node;
+      node->u.concatNode.right = right;
       r = parseQtrf(s, right, token);
       if (r < 0)
         return r;
@@ -85,8 +85,8 @@ int parseConcat(char **s, Node *node, Token *token) {
     } else if (token->kind == TK_LEFT_PARENTHESES) {
       Node *right = malloc(sizeof(Node));
       node->kind = NODE_CONCAT;
-      node->concatNode.left = node;
-      node->concatNode.right = right;
+      node->u.concatNode.left = node;
+      node->u.concatNode.right = right;
       r = parseConcat(s, right, token);
       if (r < 0)
         return r;
@@ -108,7 +108,7 @@ int parseQtrf(char **s, Node *node, Token *token) {
   if (token->kind == TK_ASTERISK) {
     (*s)++;
     node->kind = NODE_QTFE;
-    node->qtfeNode.child = node;
+    node->u.qtfeNode.child = node;
     return 0;
   }
   return 0;
@@ -136,7 +136,7 @@ int parseChar(char **s, Node *node, Token *token) {
   if (token->kind != TK_LATIN_LETTER)
     return -1;
   node->kind = NODE_CHAR;
-  node->charNode.c = token->c;
+  node->u.charNode.c = token->c;
   return 0;
 }
 
@@ -155,5 +155,5 @@ int parseRegexp(Node *node, char *str) {
     return r;
   }
 
-  return r;
+  return 0;
 }

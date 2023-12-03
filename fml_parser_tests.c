@@ -27,11 +27,9 @@ void parseRegexp_01() {
   char *s = "a";
   int r = parseRegexp(&node, s);
 
-  printf("r: %d\n", r);
-
   TEST_ASSERT(r, 0);
   TEST_ASSERT(node.kind, NODE_CHAR);
-  TEST_ASSERT(node.charNode.c, 'a');
+  TEST_ASSERT(node.u.charNode.c, 'a');
 }
 
 int main() {
