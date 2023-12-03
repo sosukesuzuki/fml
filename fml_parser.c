@@ -63,7 +63,9 @@ int parseAlt(char** s, Node* node, Token* token)
         if (token->kind == TK_VERTICAL_BAR) {
             (*s)++;
             Node* right = malloc(sizeof(Node));
-            Node* left = node;
+            Node* left = malloc(sizeof(Node));
+            memcpy(left, node, sizeof(Node));
+
             node->kind = NODE_ALT;
             node->u.altNode.left = left;
             node->u.altNode.right = right;
@@ -125,7 +127,7 @@ int parseQtrf(char** s, Node* node, Token* token)
         return r;
     if (token->kind == TK_ASTERISK) {
         (*s)++;
-        Node *child = malloc(sizeof(Node));
+        Node* child = malloc(sizeof(Node));
         memcpy(child, node, sizeof(Node));
         node->kind = NODE_QTFE;
         node->u.qtfeNode.child = child;

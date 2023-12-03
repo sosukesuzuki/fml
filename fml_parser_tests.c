@@ -60,11 +60,26 @@ void parseRegexp_03()
     TEST_ASSERT(node.u.qtfeNode.child->u.charNode.c, 'a');
 }
 
+void parseRegexp_04()
+{
+    Node node;
+    char* s = "a|b";
+    int r = parseRegexp(&node, s);
+
+    TEST_ASSERT(r, 0);
+    TEST_ASSERT(node.kind, NODE_ALT);
+    TEST_ASSERT(node.u.altNode.left->kind, NODE_CHAR);
+    TEST_ASSERT(node.u.altNode.left->u.charNode.c, 'a');
+    TEST_ASSERT(node.u.altNode.right->kind, NODE_CHAR);
+    TEST_ASSERT(node.u.altNode.right->u.charNode.c, 'b');
+}
+
 int main()
 {
     RUN_TEST(parseRegexp_01);
     RUN_TEST(parseRegexp_02);
     RUN_TEST(parseRegexp_03);
+    RUN_TEST(parseRegexp_04);
 
     return 0;
 }
