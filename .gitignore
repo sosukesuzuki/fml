@@ -1,1 +1,3 @@
 /fml
+*.o
+.vscode
