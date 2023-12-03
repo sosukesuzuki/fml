@@ -1,27 +1,10 @@
+#include "fml_parser.h"
+#include "fml_test_utils.h"
+
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#include "fml_parser.h"
-
-#define TEST_ASSERT(actual, expected)                                               \
-    do {                                                                            \
-        if ((actual) != (expected)) {                                               \
-            fprintf(                                                                \
-                stderr,                                                             \
-                "Assertion failed: (%s: %d)\nExpected: %s (%d)\nActual: %s (%d)\n", \
-                __FILE__, __LINE__, #expected, expected, #actual, actual);          \
-            exit(1);                                                                \
-        }                                                                           \
-    } while (0)
-
-#define RUN_TEST(test_func)                       \
-    do {                                          \
-        printf("Running test: %s\n", #test_func); \
-        test_func();                              \
-        printf("Test passed.\n\n");               \
-    } while (0)
 
 void parseRegexp_01()
 {
