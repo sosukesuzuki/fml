@@ -3,10 +3,10 @@
 #include "fml_vm_stack.h"
 #include <stdlib.h>
 
-int initVM(VMContext* context, char* str, Instructions* instrcution, VMStack* vmStack)
+int initVM(VMContext* context, char** str, Instructions* instrcution, VMStack* vmStack)
 {
-    context->str = str;
-    context->sp = &str;
+    context->str = *str;
+    context->sp = str;
 
     context->instructions = instrcution;
     context->pc = instrcution->instructions[0];

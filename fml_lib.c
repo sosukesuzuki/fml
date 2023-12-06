@@ -17,7 +17,7 @@ int fmlTest(char* regexp, char* str)
     initVMStack(&vmStack);
 
     VMContext context;
-    initVM(&context, str, &instructions, &vmStack);
+    initVM(&context, &str, &instructions, &vmStack);
 
     return runVM(&context);
 }

@@ -14,7 +14,7 @@ typedef struct VMContext {
     VMStack* stack;
 } VMContext;
 
-int initVM(VMContext* context, char* str, Instructions* instrcution, VMStack* vmStack);
+int initVM(VMContext* context, char** str, Instructions* instrcution, VMStack* vmStack);
 int runVM(VMContext* context);
 
 #endif
