@@ -45,8 +45,8 @@ int instructionSplit(VMContext* context, Instruction* instruction)
 
 int runVM(VMContext* context)
 {
-    int result = 0;
     while (1) {
+        int result = 0;
         switch (context->pc->kind) {
         case INSTRUCTION_MATCH:
             return 1;
