@@ -4,6 +4,8 @@
 /fml_instructions_tests
 /fml_compiler_tests
 /fml_vm_stack_tests
+/fml_lib_tests
+/fml_lib_tests_debug
 
 *.o
 .vscode

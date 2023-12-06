@@ -1,6 +1,8 @@
 #ifndef FML_VM_STACK_H
 #define FML_VM_STACK_H
 
+#include "fml_instructions.h"
+
 typedef struct Thread {
     Instruction* pc;
     char** sp;

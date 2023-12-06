@@ -12,6 +12,7 @@ INSTRUCTIONS_TESTS_OBJECT_FILES = $(INSTRUCTIONS_TESTS_SRC_FILES:.c=.o)
 COMPILER_TESTS_OBJECT_FILES = $(COMPILER_TESTS_SRC_FILES:.c=.o)
 VM_STACK_TESTS_OBJECT_FILES = $(VM_STACK_TESTS_FILES:.c=.o)
 FML_LIB_TESTS_OBJECT_FILES = $(FML_LIB_TESTS_FILES:.c=.o)
+FML_LIB_TESTS_DEBUG_OBJECT_FILES = $(FML_LIB_TESTS_FILES:.c=_debug.o)
 
 MAIN_EXECUTABLE_FILE := fml
 DEBUG_EXECUTABLE_FILE := fml_debug
@@ -20,15 +21,17 @@ INSTRUCTIONS_TESTS_EXECUTABLE_FILE := fml_instructions_tests
 COMPILER_TESTS_EXECUTABLE_FILE := fml_compiler_tests
 VM_STACK_TESTS_EXECUTABLE_FILE := fml_vm_stack_tests
 FML_LIB_TESTS_EXECUTABLE_FILE := fml_lib_tests
+FML_LIB_TESTS_DEBUG_EXECUTABLE_FILE := fml_lib_tests_debug
 
 CC := gcc
 CFLAGS := -Wall -Wextra
 DEBUG_CFLAGS := $(CFLAGS) -g
+LLDB := lldb
 
 CLANG_FORMAT := clang-format
 FORMAT_FILES := $(wildcard *.c) $(wildcard *.h)
 
-.PHONY: format clean run-fml fml fml_debug run-parser-tests run-instructions-tests run-compiler-tests run-vm-stack-tests run-fml-lib-tests
+.PHONY: format clean run-fml fml fml_debug run-parser-tests run-instructions-tests run-compiler-tests run-vm-stack-tests run-fml-lib-tests run-fml-lib-tests-debug
 
 fml: $(OBJECT_FILES)
 	$(CC) $(CFLAGS) -o $(MAIN_EXECUTABLE_FILE) $^ -lm
@@ -50,6 +53,9 @@ fml_vm_stack_tests: $(VM_STACK_TESTS_OBJECT_FILES)
 
 fml_lib_tests: $(FML_LIB_TESTS_OBJECT_FILES)
 	$(CC) $(CFLAGS) -o $(FML_LIB_TESTS_EXECUTABLE_FILE) $^ -lm
+
+fml_lib_tests_debug: $(FML_LIB_TESTS_DEBUG_OBJECT_FILES)
+	$(CC) $(DEBUG_CFLAGS) -o $(FML_LIB_TESTS_DEBUG_EXECUTABLE_FILE) $^ -lm
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c -o $@ $<
@@ -74,8 +80,11 @@ run-fml-lib-tests: fml_lib_tests
 
 run-all-tests: run-parser-tests run-instructions-tests run-compiler-tests run-vm-stack-tests run-fml-lib-tests
 
+run-fml-lib-tests-debug: fml_lib_tests_debug
+	$(LLDB) $(FML_LIB_TESTS_DEBUG_EXECUTABLE_FILE)
+
 format:
 	$(CLANG_FORMAT) -i $(FORMAT_FILES)
 
 clean:
-	rm -f $(MAIN_EXECUTABLE_FILE) $(DEBUG_EXECUTABLE_FILE) $(OBJECT_FILES) $(DEBUG_OBJECT_FILES) $(PARSER_TESTS_EXECUTABLE_FILE) $(PARSER_TESTS_OBJECT_FILES) $(INSTRUCTIONS_TESTS_EXECUTABLE_FILE) $(INSTRUCTIONS_TESTS_OBJECT_FILES) $(COMPILER_TESTS_EXECUTABLE_FILE) $(COMPILER_TESTS_OBJECT_FILES) $(VM_STACK_TESTS_EXECUTABLE_FILE) $(VM_STACK_OBJECT_FILES) $(FML_LIB_TESTS_EXECUTABLE_FILE) $(FML_LIB_OBJECT_FILES)
+	rm -f $(MAIN_EXECUTABLE_FILE) $(DEBUG_EXECUTABLE_FILE) $(OBJECT_FILES) $(DEBUG_OBJECT_FILES) $(PARSER_TESTS_EXECUTABLE_FILE) $(PARSER_TESTS_OBJECT_FILES) $(INSTRUCTIONS_TESTS_EXECUTABLE_FILE) $(INSTRUCTIONS_TESTS_OBJECT_FILES) $(COMPILER_TESTS_EXECUTABLE_FILE) $(COMPILER_TESTS_OBJECT_FILES) $(VM_STACK_TESTS_EXECUTABLE_FILE) $(VM_STACK_OBJECT_FILES) $(FML_LIB_TESTS_EXECUTABLE_FILE) $(FML_LIB_OBJECT_FILES) $(FML_LIB_TESTS_DEBUG_EXECUTABLE_FILE) $(FML_LIB_TESTS_DEBUG_OBJECT_FILES)

@@ -1,8 +1,8 @@
-#include "fml_parser.h"
 #include "fml_compiler.h"
 #include "fml_instructions.h"
-#include "fml_vm_stack.h"
+#include "fml_parser.h"
 #include "fml_vm.h"
+#include "fml_vm_stack.h"
 
 int fmlTest(char* regexp, char* str)
 {
