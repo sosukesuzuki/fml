@@ -9,7 +9,7 @@ typedef struct VMContext {
     char** sp;
 
     Instructions* instructions;
-    Instruction* pc;
+    int pc;
 
     VMStack* stack;
 } VMContext;

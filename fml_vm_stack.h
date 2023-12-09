@@ -4,7 +4,7 @@
 #include "fml_instructions.h"
 
 typedef struct Thread {
-    Instruction* pc;
+    int pc;
     char** sp;
 } Thread;
 

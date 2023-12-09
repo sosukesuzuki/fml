@@ -9,11 +9,16 @@ int initVM(VMContext* context, char** str, Instructions* instrcution, VMStack* v
     context->sp = str;
 
     context->instructions = instrcution;
-    context->pc = instrcution->instructions[0];
+    context->pc = 0;
 
     context->stack = vmStack;
 
     return 0;
+}
+
+Instruction* pcInstruction(VMContext* context)
+{
+    return context->instructions->instructions[context->pc];
 }
 
 int instructionChar(VMContext* context, Instruction* instruction)
@@ -21,6 +26,7 @@ int instructionChar(VMContext* context, Instruction* instruction)
     if (**context->sp == instruction->u.iChar.c) {
         (*context->sp)++;
         context->pc++;
+
         return 1;
     }
     return 0;
@@ -28,8 +34,7 @@ int instructionChar(VMContext* context, Instruction* instruction)
 
 int instructionJmp(VMContext* context, Instruction* instruction)
 {
-    int pcIdx = context->pc - context->instructions->instructions[0];
-    context->pc = context->instructions->instructions[pcIdx + instruction->u.iJmp.offset];
+    context->pc = instruction->u.iJmp.offset;
     return 1;
 }
 
@@ -37,13 +42,12 @@ int instructionSplit(VMContext* context, Instruction* instruction)
 {
     Thread* thread = malloc(sizeof(Thread));
 
-    int pcIdx = context->pc - context->instructions->instructions[0];
-    thread->pc = context->instructions->instructions[pcIdx + instruction->u.iSplit.offset1];
+    thread->pc = context->pc + instruction->u.iSplit.offset1;
     thread->sp = context->sp;
 
     pushVMStack(context->stack, thread);
 
-    context->pc = context->instructions->instructions[instruction->u.iSplit.offset2];
+    context->pc = context->pc + instruction->u.iSplit.offset2;
     return 1;
 }
 
@@ -51,17 +55,17 @@ int runVM(VMContext* context)
 {
     while (1) {
         int result = 0;
-        switch (context->pc->kind) {
+        switch (pcInstruction(context)->kind) {
         case INSTRUCTION_MATCH:
             return 1;
         case INSTRUCTION_CHAR:
-            result = instructionChar(context, context->pc);
+            result = instructionChar(context, pcInstruction(context));
             break;
         case INSTRUCTION_JMP:
-            result = instructionJmp(context, context->pc);
+            result = instructionJmp(context, pcInstruction(context));
             break;
         case INSTRUCTION_SPLIT:
-            result = instructionSplit(context, context->pc);
+            result = instructionSplit(context, pcInstruction(context));
             break;
         }
 
