@@ -1,3 +1,19 @@
+# ====================================================================
+# Variables 
+# ====================================================================
+
+CC := gcc
+CFLAGS := -Wall -Wextra
+DEBUG_CFLAGS := $(CFLAGS) -g
+LLDB := lldb
+
+CLANG_FORMAT := clang-format
+FORMAT_FILES := $(wildcard *.c) $(wildcard *.h)
+
+# ====================================================================
+# Files
+# ====================================================================
+
 MAIN_SRC_FILES := fml.c fml_parser.c
 PARSER_TESTS_SRC_FILES := fml_parser_tests.c fml_parser.c
 INSTRUCTIONS_TESTS_SRC_FILES := fml_instructions_tests.c fml_instructions.c
@@ -23,15 +39,11 @@ VM_STACK_TESTS_EXECUTABLE_FILE := fml_vm_stack_tests
 FML_LIB_TESTS_EXECUTABLE_FILE := fml_lib_tests
 FML_LIB_TESTS_DEBUG_EXECUTABLE_FILE := fml_lib_tests_debug
 
-CC := gcc
-CFLAGS := -Wall -Wextra
-DEBUG_CFLAGS := $(CFLAGS) -g
-LLDB := lldb
-
-CLANG_FORMAT := clang-format
-FORMAT_FILES := $(wildcard *.c) $(wildcard *.h)
-
 .PHONY: format clean run-fml fml fml_debug run-parser-tests run-instructions-tests run-compiler-tests run-vm-stack-tests run-fml-lib-tests run-fml-lib-tests-debug
+
+# ====================================================================
+# Build targets
+# ====================================================================
 
 fml: $(OBJECT_FILES)
 	$(CC) $(CFLAGS) -o $(MAIN_EXECUTABLE_FILE) $^ -lm
@@ -63,6 +75,10 @@ fml_lib_tests_debug: $(FML_LIB_TESTS_DEBUG_OBJECT_FILES)
 %_debug.o: %.c
 	$(CC) $(DEBUG_CFLAGS) -c -o $@ $<
 
+# ====================================================================
+# Run tests
+# ====================================================================
+
 run-parser-tests: fml_parser_tests
 	./$(PARSER_TESTS_EXECUTABLE_FILE)
 
@@ -82,6 +98,10 @@ run-all-tests: run-parser-tests run-instructions-tests run-compiler-tests run-vm
 
 run-fml-lib-tests-debug: fml_lib_tests_debug
 	$(LLDB) $(FML_LIB_TESTS_DEBUG_EXECUTABLE_FILE)
+
+# ====================================================================
+# Development utils
+# ====================================================================
 
 format:
 	$(CLANG_FORMAT) -i $(FORMAT_FILES)
