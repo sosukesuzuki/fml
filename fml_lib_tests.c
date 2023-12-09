@@ -26,20 +26,20 @@ void fmlTest_05()
     TEST_ASSERT(fmlTest("a|b", "b"), 1);
 }
 
-// void fmlTest_06()
-// {
-//     TEST_ASSERT(fmlTest("a|b", "c"), 0);
-// }
+void fmlTest_06()
+{
+    TEST_ASSERT(fmlTest("a|b", "c"), 0);
+}
 
 void fmlTest_07()
 {
     TEST_ASSERT(fmlTest("abc", "abc"), 1);
 }
 
-// void fmlTest_08()
-// {
-//     TEST_ASSERT(fmlTest("abc", "abd"), 0);
-// }
+void fmlTest_08()
+{
+    TEST_ASSERT(fmlTest("abc", "abd"), 0);
+}
 
 int main()
 {
@@ -48,8 +48,8 @@ int main()
     RUN_TEST(fmlTest_03);
     RUN_TEST(fmlTest_04);
     RUN_TEST(fmlTest_05);
-    // RUN_TEST(fmlTest_06);
+    RUN_TEST(fmlTest_06);
     RUN_TEST(fmlTest_07);
-    // RUN_TEST(fmlTest_08);
+    RUN_TEST(fmlTest_08);
     return 0;
 }

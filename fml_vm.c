@@ -28,15 +28,19 @@ int instructionChar(VMContext* context, Instruction* instruction)
 
 int instructionJmp(VMContext* context, Instruction* instruction)
 {
-    context->pc = context->instructions->instructions[instruction->u.iJmp.offset];
+    int pcIdx = context->pc - context->instructions->instructions[0];
+    context->pc = context->instructions->instructions[pcIdx + instruction->u.iJmp.offset];
     return 1;
 }
 
 int instructionSplit(VMContext* context, Instruction* instruction)
 {
     Thread* thread = malloc(sizeof(Thread));
-    thread->pc = context->pc + instruction->u.iSplit.offset1;
+
+    int pcIdx = context->pc - context->instructions->instructions[0];
+    thread->pc = context->instructions->instructions[pcIdx + instruction->u.iSplit.offset1];
     thread->sp = context->sp;
+
     pushVMStack(context->stack, thread);
 
     context->pc = context->instructions->instructions[instruction->u.iSplit.offset2];
@@ -49,7 +53,8 @@ int runVM(VMContext* context)
         int result = 0;
         switch (context->pc->kind) {
         case INSTRUCTION_MATCH:
-            return 1;
+            result = 1;
+            break;
         case INSTRUCTION_CHAR:
             result = instructionChar(context, context->pc);
             break;
