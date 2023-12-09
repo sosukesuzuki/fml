@@ -14,20 +14,16 @@ typedef struct Instruction {
     InstructionKind kind;
     union {
         struct {
-            int offset;
-        } iMatch;
-
-        struct {
             char c;
         } iChar;
 
         struct {
-            int offset1;
-            int offset2;
+            int pos1;
+            int pos2;
         } iSplit;
 
         struct {
-            int offset;
+            int pos;
         } iJmp;
     } u;
 } Instruction;

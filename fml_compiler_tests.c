@@ -56,12 +56,12 @@ void compile_03()
     TEST_ASSERT(instructions.size, 4);
     TEST_ASSERT(instructions.cap, 16);
     TEST_ASSERT(instructions.instructions[0]->kind, INSTRUCTION_SPLIT);
-    TEST_ASSERT(instructions.instructions[0]->u.iSplit.offset1, 1);
-    TEST_ASSERT(instructions.instructions[0]->u.iSplit.offset2, 3);
+    TEST_ASSERT(instructions.instructions[0]->u.iSplit.pos1, 1);
+    TEST_ASSERT(instructions.instructions[0]->u.iSplit.pos2, 3);
     TEST_ASSERT(instructions.instructions[1]->kind, INSTRUCTION_CHAR);
     TEST_ASSERT(instructions.instructions[1]->u.iChar.c, 'a');
     TEST_ASSERT(instructions.instructions[2]->kind, INSTRUCTION_JMP);
-    TEST_ASSERT(instructions.instructions[2]->u.iJmp.offset, 0);
+    TEST_ASSERT(instructions.instructions[2]->u.iJmp.pos, 0);
     TEST_ASSERT(instructions.instructions[3]->kind, INSTRUCTION_MATCH);
 }
 
@@ -80,12 +80,12 @@ void compile_04()
     TEST_ASSERT(instructions.size, 5);
     TEST_ASSERT(instructions.cap, 16);
     TEST_ASSERT(instructions.instructions[0]->kind, INSTRUCTION_SPLIT);
-    TEST_ASSERT(instructions.instructions[0]->u.iSplit.offset1, 1);
-    TEST_ASSERT(instructions.instructions[0]->u.iSplit.offset2, 3);
+    TEST_ASSERT(instructions.instructions[0]->u.iSplit.pos1, 1);
+    TEST_ASSERT(instructions.instructions[0]->u.iSplit.pos2, 3);
     TEST_ASSERT(instructions.instructions[1]->kind, INSTRUCTION_CHAR);
     TEST_ASSERT(instructions.instructions[1]->u.iChar.c, 'a');
     TEST_ASSERT(instructions.instructions[2]->kind, INSTRUCTION_JMP);
-    TEST_ASSERT(instructions.instructions[2]->u.iJmp.offset, 4);
+    TEST_ASSERT(instructions.instructions[2]->u.iJmp.pos, 4);
     TEST_ASSERT(instructions.instructions[3]->kind, INSTRUCTION_CHAR);
     TEST_ASSERT(instructions.instructions[3]->u.iChar.c, 'b');
     TEST_ASSERT(instructions.instructions[4]->kind, INSTRUCTION_MATCH);

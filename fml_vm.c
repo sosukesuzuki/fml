@@ -34,7 +34,7 @@ int instructionChar(VMContext* context, Instruction* instruction)
 
 int instructionJmp(VMContext* context, Instruction* instruction)
 {
-    context->pc = instruction->u.iJmp.offset;
+    context->pc = instruction->u.iJmp.pos;
     return 1;
 }
 
@@ -42,12 +42,12 @@ int instructionSplit(VMContext* context, Instruction* instruction)
 {
     Thread* thread = malloc(sizeof(Thread));
 
-    thread->pc = instruction->u.iSplit.offset1;
+    thread->pc = instruction->u.iSplit.pos1;
     thread->sp = context->sp;
 
     pushVMStack(context->stack, thread);
 
-    context->pc = instruction->u.iSplit.offset2;
+    context->pc = instruction->u.iSplit.pos2;
     return 1;
 }
 

@@ -29,17 +29,17 @@ void compileQtfr(Node* node, Instructions* instructions)
     int l1 = instructions->size;
     Instruction* instruction1 = malloc(sizeof(Instruction));
     instruction1->kind = INSTRUCTION_SPLIT;
-    instruction1->u.iSplit.offset1 = l1 + 1;
+    instruction1->u.iSplit.pos1 = l1 + 1;
     appendInstruction(instructions, instruction1);
 
     compileNode(node->u.qtfrNode.child, instructions);
     Instruction* instructionJmp = malloc(sizeof(Instruction));
     instructionJmp->kind = INSTRUCTION_JMP;
-    instructionJmp->u.iJmp.offset = l1;
+    instructionJmp->u.iJmp.pos = l1;
     appendInstruction(instructions, instructionJmp);
 
     int l3 = instructions->size;
-    instruction1->u.iSplit.offset2 = l3;
+    instruction1->u.iSplit.pos2 = l3;
 }
 
 // a|b
@@ -52,7 +52,7 @@ void compileAlt(Node* node, Instructions* instructions)
     // L3:
     Instruction* instructionSplit = malloc(sizeof(Instruction));
     instructionSplit->kind = INSTRUCTION_SPLIT;
-    instructionSplit->u.iSplit.offset1 = instructions->size + 1;
+    instructionSplit->u.iSplit.pos1 = instructions->size + 1;
     appendInstruction(instructions, instructionSplit);
 
     compileNode(node->u.altNode.left, instructions);
@@ -62,12 +62,12 @@ void compileAlt(Node* node, Instructions* instructions)
 
     int l2 = instructions->size;
 
-    instructionSplit->u.iSplit.offset2 = l2;
+    instructionSplit->u.iSplit.pos2 = l2;
 
     compileNode(node->u.altNode.right, instructions);
 
     int l3 = instructions->size;
-    instructionJmp->u.iJmp.offset = l3;
+    instructionJmp->u.iJmp.pos = l3;
 }
 
 void compileNode(Node* node, Instructions* instructions)
