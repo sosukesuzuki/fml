@@ -42,12 +42,12 @@ int instructionSplit(VMContext* context, Instruction* instruction)
 {
     Thread* thread = malloc(sizeof(Thread));
 
-    thread->pc = context->pc + instruction->u.iSplit.offset1;
+    thread->pc = instruction->u.iSplit.offset1;
     thread->sp = context->sp;
 
     pushVMStack(context->stack, thread);
 
-    context->pc = context->pc + instruction->u.iSplit.offset2;
+    context->pc = instruction->u.iSplit.offset2;
     return 1;
 }
 
