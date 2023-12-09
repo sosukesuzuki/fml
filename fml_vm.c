@@ -53,8 +53,7 @@ int runVM(VMContext* context)
         int result = 0;
         switch (context->pc->kind) {
         case INSTRUCTION_MATCH:
-            result = 1;
-            break;
+            return 1;
         case INSTRUCTION_CHAR:
             result = instructionChar(context, context->pc);
             break;
