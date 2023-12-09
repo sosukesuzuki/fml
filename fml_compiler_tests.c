@@ -91,11 +91,35 @@ void compile_04()
     TEST_ASSERT(instructions.instructions[4]->kind, INSTRUCTION_MATCH);
 }
 
+void compile_05()
+{
+    Node node;
+    char* s = "abc";
+    parseRegexp(&node, s);
+
+    Instructions instructions;
+    initInstructions(&instructions);
+
+    int r = compile(&node, &instructions);
+
+    TEST_ASSERT(r, 0);
+    TEST_ASSERT(instructions.size, 4);
+    TEST_ASSERT(instructions.cap, 16);
+    TEST_ASSERT(instructions.instructions[0]->kind, INSTRUCTION_CHAR);
+    TEST_ASSERT(instructions.instructions[0]->u.iChar.c, 'a');
+    TEST_ASSERT(instructions.instructions[1]->kind, INSTRUCTION_CHAR);
+    TEST_ASSERT(instructions.instructions[1]->u.iChar.c, 'b');
+    TEST_ASSERT(instructions.instructions[2]->kind, INSTRUCTION_CHAR);
+    TEST_ASSERT(instructions.instructions[2]->u.iChar.c, 'c');
+    TEST_ASSERT(instructions.instructions[3]->kind, INSTRUCTION_MATCH);
+}
+
 int main()
 {
     RUN_TEST(compile_01);
     RUN_TEST(compile_02);
     RUN_TEST(compile_03);
     RUN_TEST(compile_04);
+    RUN_TEST(compile_05);
     return 0;
 }
