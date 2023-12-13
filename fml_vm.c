@@ -40,10 +40,7 @@ int instructionJmp(VMContext* context, Instruction* instruction)
 
 int instructionSplit(VMContext* context, Instruction* instruction)
 {
-    Thread* thread = malloc(sizeof(Thread));
-
-    thread->pc = instruction->u.iSplit.pos1;
-    thread->sp = context->sp;
+    Thread thread = { instruction->u.iSplit.pos1, context->sp };
 
     pushVMStack(context->stack, thread);
 
@@ -70,12 +67,12 @@ int runVM(VMContext* context)
         }
 
         if (!result) {
-            Thread* thread = popVMStack(context->stack);
-            if (thread == NULL) {
+            Thread thread = popVMStack(context->stack);
+            if (isNullThread(thread)) {
                 return 0;
             }
-            context->pc = thread->pc;
-            context->sp = thread->sp;
+            context->pc = thread.pc;
+            context->sp = thread.sp;
         }
     }
     return 1;

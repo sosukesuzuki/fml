@@ -15,7 +15,7 @@ int isVMStackFull(VMStack* stack)
     return stack->top >= stack->cap - 1;
 }
 
-int pushVMStack(VMStack* stack, Thread* thread)
+int pushVMStack(VMStack* stack, Thread thread)
 {
     if (isVMStackFull(stack)) {
         return -1;
@@ -30,12 +30,18 @@ int isVMStackEmpty(VMStack* stack)
     return stack->top < 0;
 }
 
-Thread* popVMStack(VMStack* stack)
+Thread popVMStack(VMStack* stack)
 {
     if (isVMStackEmpty(stack)) {
-        return NULL;
+        Thread thread = { -1, NULL };
+        return thread;
     }
-    Thread* thread = stack->threads[stack->top];
+    Thread thread = stack->threads[stack->top];
     stack->top--;
     return thread;
+}
+
+int isNullThread(Thread thread)
+{
+    return thread.pc == -1;
 }

@@ -9,13 +9,13 @@ void pushVMStack_01()
     initVMStack(&stack);
 
     Thread thread = { 0, 0 };
-    r = pushVMStack(&stack, &thread);
+    r = pushVMStack(&stack, thread);
     TEST_ASSERT(r, 0);
 
     TEST_ASSERT(stack.top, 0);
     TEST_ASSERT(stack.cap, 32);
-    TEST_ASSERT(stack.threads[0]->pc, 0);
-    TEST_ASSERT(stack.threads[0]->sp, 0);
+    TEST_ASSERT(stack.threads[0].pc, 0);
+    TEST_ASSERT(stack.threads[0].sp, 0);
 }
 
 void pushVMStack_02()
@@ -25,19 +25,19 @@ void pushVMStack_02()
     initVMStack(&stack);
 
     Thread thread1 = { 0, 0 };
-    r = pushVMStack(&stack, &thread1);
+    r = pushVMStack(&stack, thread1);
     TEST_ASSERT(r, 0);
 
     Thread thread2 = { 1, 1 };
-    pushVMStack(&stack, &thread2);
+    pushVMStack(&stack, thread2);
     TEST_ASSERT(r, 0);
 
     TEST_ASSERT(stack.top, 1);
     TEST_ASSERT(stack.cap, 32);
-    TEST_ASSERT(stack.threads[0]->pc, 0);
-    TEST_ASSERT(stack.threads[0]->sp, 0);
-    TEST_ASSERT(stack.threads[1]->pc, 1);
-    TEST_ASSERT(stack.threads[1]->sp, 1);
+    TEST_ASSERT(stack.threads[0].pc, 0);
+    TEST_ASSERT(stack.threads[0].sp, 0);
+    TEST_ASSERT(stack.threads[1].pc, 1);
+    TEST_ASSERT(stack.threads[1].sp, 1);
 }
 
 void pushVMStack_03()
@@ -50,12 +50,12 @@ void pushVMStack_03()
 
     for (int i = 0; i < cap; i++) {
         Thread thread = { i, i };
-        r = pushVMStack(&stack, &thread);
+        r = pushVMStack(&stack, thread);
         TEST_ASSERT(r, 0);
     }
 
     Thread thread = { 0, 0 };
-    r = pushVMStack(&stack, &thread);
+    r = pushVMStack(&stack, thread);
     TEST_ASSERT(r, -1);
 }
 
@@ -66,12 +66,12 @@ void popVMStack_01()
     initVMStack(&stack);
 
     Thread thread = { 0, 0 };
-    r = pushVMStack(&stack, &thread);
+    r = pushVMStack(&stack, thread);
     TEST_ASSERT(r, 0);
 
-    Thread* poppedThread = popVMStack(&stack);
-    TEST_ASSERT(poppedThread->pc, 0);
-    TEST_ASSERT(poppedThread->sp, 0);
+    Thread poppedThread = popVMStack(&stack);
+    TEST_ASSERT(poppedThread.pc, 0);
+    TEST_ASSERT(poppedThread.sp, 0);
 
     TEST_ASSERT(stack.top, -1);
     TEST_ASSERT(stack.cap, 32);
@@ -82,8 +82,8 @@ void popVMStack_02()
     VMStack stack;
     initVMStack(&stack);
 
-    Thread* poppedThread = popVMStack(&stack);
-    TEST_ASSERT(poppedThread == NULL, 1);
+    Thread poppedThread = popVMStack(&stack);
+    TEST_ASSERT(isNullThread(poppedThread), 1);
 
     TEST_ASSERT(stack.top, -1);
     TEST_ASSERT(stack.cap, 32);

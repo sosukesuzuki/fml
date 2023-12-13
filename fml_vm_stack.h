@@ -9,13 +9,14 @@ typedef struct Thread {
 } Thread;
 
 typedef struct VMStack {
-    Thread** threads;
+    Thread* threads;
     int top;
     int cap;
 } VMStack;
 
 void initVMStack(VMStack* stack);
-int pushVMStack(VMStack* stack, Thread* thread);
-Thread* popVMStack(VMStack* stack);
+int pushVMStack(VMStack* stack, Thread thread);
+Thread popVMStack(VMStack* stack);
+int isNullThread(Thread thread);
 
 #endif
